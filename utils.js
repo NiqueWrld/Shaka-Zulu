@@ -19,6 +19,8 @@ export async function convertAudioBufferToWavBlob(audioBuffer) {
   });
 }
 
+import { setDataInput } from '/firebaseConfig.js';
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 
@@ -37,23 +39,34 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 export function downloadBlob(blob, filename) {
-    // Create a reference to the storage bucket
-    const storageRef = ref(storage, `${filename}`);
+  // Create a reference to the storage bucket
+  const storageRef = ref(storage, `${filename}`);
 
-    // Upload the blob to Firebase Storage
-    return uploadBytes(storageRef, blob)
-        .then((snapshot) => {
-            console.log('File uploaded successfully:', snapshot);
+  // Upload the blob to Firebase Storage
+  return uploadBytes(storageRef, blob)
+    .then((snapshot) => {
+      console.log('File uploaded successfully:', snapshot);
 
-            setTimeout(() => {
-              ws.send("Upload-Done");
-            }, 1000);
+      setTimeout(() => {
 
-        })
-        .catch((error) => {
-            console.error('Error uploading file:', error);
-            throw error;
+        let now = new Date();
+        
+        let currentDate = now.toLocaleDateString(); // Format: MM/DD/YYYY
+        let currentTime = now.toLocaleTimeString(); // Format: HH:MM:SS AM/PM
+        let currentHour = now.getHours();
+
+        setDataInput({
+          date: currentDate,
+          time: currentTime,
+          hour: currentHour
         });
+      }, 1000);
+
+    })
+    .catch((error) => {
+      console.error('Error uploading file:', error);
+      throw error;
+    });
 }
 
 export function initButtonListener(mediaRecorder) {
