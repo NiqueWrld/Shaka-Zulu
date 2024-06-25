@@ -12,34 +12,37 @@
     <p id="status"></p>
 
     <script>
-        // Check for browser support
-        if (!('webkitSpeechRecognition' in window)) {
-            alert('Your browser does not support speech recognition. Try Chrome.');
-        } else {
-            var recognition = new webkitSpeechRecognition();
-            recognition.lang = 'zu-ZA'; // Set the language to Zulu
-            recognition.continuous = false;
-            recognition.interimResults = false;
+        window.onload = function() {
+            // Check for browser support
+            if (!('webkitSpeechRecognition' in window)) {
+                document.getElementById('status').innerText = 'Your browser does not support speech recognition. Please try using Google Chrome.';
+                document.getElementById('start').disabled = true; // Disable the button if not supported
+            } else {
+                var recognition = new webkitSpeechRecognition();
+                recognition.lang = 'zu-ZA'; // Set the language to Zulu
+                recognition.continuous = false;
+                recognition.interimResults = false;
 
-            document.getElementById('start').onclick = function() {
-                recognition.start();
-                document.getElementById('status').innerText = 'Listening...';
-            };
+                document.getElementById('start').onclick = function() {
+                    recognition.start();
+                    document.getElementById('status').innerText = 'Listening...';
+                };
 
-            recognition.onresult = function(event) {
-                var transcript = event.results[0][0].transcript;
-                document.getElementById('result').innerText = 'Result: ' + transcript;
-                document.getElementById('status').innerText = 'Recognition complete.';
-            };
+                recognition.onresult = function(event) {
+                    var transcript = event.results[0][0].transcript;
+                    document.getElementById('result').innerText = 'Result: ' + transcript;
+                    document.getElementById('status').innerText = 'Recognition complete.';
+                };
 
-            recognition.onerror = function(event) {
-                document.getElementById('status').innerText = 'Error occurred: ' + event.error;
-            };
+                recognition.onerror = function(event) {
+                    document.getElementById('status').innerText = 'Error occurred: ' + event.error;
+                };
 
-            recognition.onend = function() {
-                document.getElementById('status').innerText = 'Recognition ended.';
-            };
-        }
+                recognition.onend = function() {
+                    document.getElementById('status').innerText = 'Recognition ended.';
+                };
+            }
+        };
     </script>
 </body>
 </html>
