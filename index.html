@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zulu Speech Recognition</title>
 </head>
-
 <body>
-  <button id="record-button">Initializing...</button>
-  <script type="module" src="record.js"></script>
+    <h1>Zulu Speech Recognition</h1>
+    <button id="start">Start Recognition</button>
+    <p id="result">Speak now...</p>
+    <p id="status"></p>
 
+    <script>
+        // Check for browser support
+        if (!('webkitSpeechRecognition' in window)) {
+            alert('Your browser does not support speech recognition. Try Chrome.');
+        } else {
+            var recognition = new webkitSpeechRecognition();
+            recognition.lang = 'zu-ZA'; // Set the language to Zulu
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            document.getElementById('start').onclick = function() {
+                recognition.start();
+                document.getElementById('status').innerText = 'Listening...';
+            };
+
+            recognition.onresult = function(event) {
+                var transcript = event.results[0][0].transcript;
+                document.getElementById('result').innerText = 'Result: ' + transcript;
+                document.getElementById('status').innerText = 'Recognition complete.';
+            };
+
+            recognition.onerror = function(event) {
+                document.getElementById('status').innerText = 'Error occurred: ' + event.error;
+            };
+
+            recognition.onend = function() {
+                document.getElementById('status').innerText = 'Recognition ended.';
+            };
+        }
+    </script>
 </body>
-
 </html>
