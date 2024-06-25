@@ -1,57 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zulu Speech Recognition</title>
+
 </head>
+
 <body>
-    <h1>Zulu Speech Recognition</h1>
-    <button id="start">Start Recognition</button>
-    <p id="result">Speak now...</p>
-    <p id="status"></p>
+  <button id="record-button">Initializing...</button>
+  <script type="module" src="record.js"></script>
 
-    <script>
-        window.onload = function() {
-            // Check for browser support
-            if (!('webkitSpeechRecognition' in window)) {
-                document.getElementById('status').innerText = 'Your browser does not support speech recognition. Please try using Google Chrome.';
-                document.getElementById('start').disabled = true; // Disable the button if not supported
-            } else {
-                var recognition = new webkitSpeechRecognition();
-                recognition.lang = 'zu-ZA'; // Set the language to Zulu
-                recognition.continuous = false;
-                recognition.interimResults = false;
-
-                document.getElementById('start').onclick = function() {
-                    try {
-                        recognition.start();
-                        document.getElementById('status').innerText = 'Listening...';
-                    } catch (error) {
-                        document.getElementById('status').innerText = 'Error: ' + error.message;
-                    }
-                };
-
-                recognition.onresult = function(event) {
-                    var transcript = event.results[0][0].transcript;
-                    document.getElementById('result').innerText = 'Result: ' + transcript;
-                    document.getElementById('status').innerText = 'Recognition complete.';
-                };
-
-                recognition.onerror = function(event) {
-                    var errorMessage = 'Error occurred: ' + event.error;
-                    if (event.error === 'not-allowed') {
-                        errorMessage += '. Please ensure the microphone is enabled and permissions are granted.';
-                    }
-                    document.getElementById('status').innerText = errorMessage;
-                    console.log(errorMessage)
-                };
-
-                recognition.onend = function() {
-                    document.getElementById('status').innerText = 'Recognition ended.';
-                };
-            }
-        };
-    </script>
 </body>
+
 </html>
