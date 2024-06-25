@@ -24,8 +24,12 @@
                 recognition.interimResults = false;
 
                 document.getElementById('start').onclick = function() {
-                    recognition.start();
-                    document.getElementById('status').innerText = 'Listening...';
+                    try {
+                        recognition.start();
+                        document.getElementById('status').innerText = 'Listening...';
+                    } catch (error) {
+                        document.getElementById('status').innerText = 'Error: ' + error.message;
+                    }
                 };
 
                 recognition.onresult = function(event) {
@@ -35,7 +39,12 @@
                 };
 
                 recognition.onerror = function(event) {
-                    document.getElementById('status').innerText = 'Error occurred: ' + event.error;
+                    var errorMessage = 'Error occurred: ' + event.error;
+                    if (event.error === 'not-allowed') {
+                        errorMessage += '. Please ensure the microphone is enabled and permissions are granted.';
+                    }
+                    document.getElementById('status').innerText = errorMessage;
+                    console.log(errorMessage)
                 };
 
                 recognition.onend = function() {
