@@ -1,0 +1,27 @@
+[
+    {
+        "name": "AlphaGo",
+        "description": "An AI developed by DeepMind to play the board game Go.",
+        "image": "https://example.com/images/alphago.jpg"
+    },
+    {
+        "name": "ChatGPT",
+        "description": "An AI language model developed by OpenAI capable of generating human-like text.",
+        "image": "https://example.com/images/chatgpt.jpg"
+    },
+    {
+        "name": "IBM Watson",
+        "description": "An AI developed by IBM known for its ability to answer questions posed in natural language.",
+        "image": "https://example.com/images/ibm_watson.jpg"
+    },
+    {
+        "name": "Siri",
+        "description": "A virtual assistant created by Apple that uses voice queries and a natural-language user interface.",
+        "image": "https://example.com/images/siri.jpg"
+    },
+    {
+        "name": "Alexa",
+        "description": "An AI assistant developed by Amazon, capable of voice interaction, music playback, and other tasks.",
+        "image": "https://example.com/images/alexa.jpg"
+    }
+]
